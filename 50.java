@@ -1,11 +1,5 @@
-import java.util.*;
-class Test {
-    public static void main(String args[] ) throws Exception {
-        double x = 2;
-        int n = 8;
-        System.out.println(myPow(x,n));
-    }
-      public static double myPow(double x, int n) {
+class Solution {
+    public double myPow(double x, int n) {
         if(n == 0){
             return 1;
         }
