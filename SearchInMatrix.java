@@ -3,25 +3,31 @@ import java.util.Arrays;
 public class SearchInMatrix {
     public static void main(String[] args){
         // int[][] ar = {{10,20,30,40},{15,25,35,45},{28,29,37,49},{33,34,38,50}};
-        int[][] ar = {{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16}};
-        int target = 16;
-        System.out.println(Arrays.toString(sortedSearch(ar, target)));
+        int[][] ar = {
+            {1, 4, 7, 12, 15, 1000},
+            {2, 5, 19, 31, 32, 1001},
+            {3, 8, 24, 33, 35, 1002},
+            {40, 41, 42, 44, 45, 1003},
+            {99, 100, 103, 106, 128, 1004}
+          };
+        int target = 2;
+        System.out.println(Arrays.toString(search(ar, target)));
     }
-    public static int[] search(int[][] arr,int target){
-        int rs = 0;
-        int ce = arr[0].length-1;
-        while(rs<=ce){
-            if(arr[rs][ce] == target){
-                return new int[]{rs,ce};
-            }
-            else if(arr[rs][ce] < target){
-                rs++;
-            }
-            else {
-                ce--;
-            }
-        }
-        return new int[]{-1,-1};
+    public static int[] search(int[][] matrix,int target){
+    int r = 0;
+    int c = matrix[0].length-1;
+    while(r <= matrix.length-1 && c >= 0){
+      if(matrix[r][c] == target ){
+        return new int[]{r,c};
+      }
+      else if(target > matrix[r][c]){
+        r++;
+      }
+      else{
+        c--;
+      }
+    }
+    return new int[] {-1, -1};
     }
 
     public static int[] sortedSearch(int[][] arr,int target){
