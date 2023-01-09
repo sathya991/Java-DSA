@@ -1,19 +1,5 @@
-import java.util.*;
-class Test {
-    public static void main(String args[] ) throws Exception {
-        // double x = 2;
-        // int n = 8;
-        // List<Integer> ar = new ArrayList<>();
-        // ar.add(1);
-        // ar.add(2);
-        // ar.add(3);
-        String s = "1905";
-
-        System.out.println(phoneNumberMnemonics(s));
-       
-    }
-    public static ArrayList<String> phoneNumberMnemonics(String phoneNumber) {
-      // Write your code here.
+class Solution {
+    public List<String> letterCombinations(String phoneNumber) {
       Map<Integer, List<Character>> map = new HashMap<>();
       map.put(0,Arrays.asList('0'));
       map.put(1,Arrays.asList('1'));
@@ -25,8 +11,11 @@ class Test {
       map.put(7,Arrays.asList('p','q','r','s'));
       map.put(8,Arrays.asList('t','u','v'));
       map.put(9,Arrays.asList('w','x','y','z'));
-      ArrayList<String> result = new ArrayList<>();
+      List<String> result = new ArrayList<>();
       StringBuilder s = new StringBuilder("");
+      if(phoneNumber.length() == 0){
+          return result;
+      }
       for(int i = 0;i < phoneNumber.length();i++){
         List<Character> c = map.get(Character.getNumericValue(phoneNumber.charAt(i)));
         s.append(c.get(0));
@@ -36,7 +25,7 @@ class Test {
       return result;
     }
   
-    public static void helper(String str, Map<Integer,List<Character>> map,List<String> result,int i,String s){
+    public void helper(String str, Map<Integer,List<Character>> map,List<String> result,int i,String s){
       StringBuilder curStr = new StringBuilder(s);
       if(i == str.length()){
         if(result.contains(curStr.toString())){
@@ -55,4 +44,4 @@ class Test {
         helper(str,map,result,i+1,curStr.toString());
       }
     }
-    }
+}
