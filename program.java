@@ -1,34 +1,152 @@
 import java.util.*;
 
+// Feel free to add new properties and methods to the class.
 class Program {
-    public static void main(String[] args){
-        int[][] intervals = {{1,22},{-20,30}};
-        System.out.println(Arrays.toString(mergeOverlappingIntervals(intervals)));
+  static class DoublyLinkedList {
+    public Node head;
+    public Node tail;
+
+    public void setHead(Node node) {
+      // Write your code here.
+      node.next = head;
+      if(head != null){
+        head.prev = node;
+      }else{
+        tail = node;
+      }
+      head = node;
     }
 
-  public static int[][] mergeOverlappingIntervals(int[][] intervals) {
-    // Write your code here.
-    int[][] returnAr = new int[intervals.length][2];
-    Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
-    int[] newAr = intervals[0];
-    int k = 0;
-    for(int i = 0;i < intervals.length-1;i++){
-      if(newAr[1] - intervals[i+1][0] >= 0 && intervals[i+1][1] > newAr[1]){
-        newAr[1] = intervals[i+1][1];
+    public void setTail(Node node) {
+      // Write your code here.
+      node.prev = tail;
+      if(tail != null){
+        tail.next = node;
+      }else{
+        head = node;
       }
-      else{
-        returnAr[k] = newAr;
-        k++;
-        if(i == intervals.length-1){
-            newAr = intervals[i];
-        }else{
-            newAr = intervals[i+1];
+      tail = node;
+    }
+
+    public void insertBefore(Node node, Node nodeToInsert) {
+        // Write your code here.
+        Node temp = head;
+        if(head.next == null || tail.prev == null) return;
+        this.remove(nodeToInsert);
+        while(temp.next != null){
+          if(temp.value == node.value){
+            if(temp == head){
+              this.setHead(nodeToInsert);
+              break;
+            }
+            temp.prev.next = nodeToInsert;
+            nodeToInsert.next = temp;
+            nodeToInsert.prev = temp.prev;
+            temp.prev = nodeToInsert;
+            break;
+          }
+          else{
+            temp = temp.next;
+          }
         }
+    }
+
+    public void insertAfter(Node node, Node nodeToInsert) {
+      // Write your code here.
+       Node temp = head;
+        if(head.next == null || tail.prev == null) return;
+        this.remove(nodeToInsert);
+        while(temp.next != null){
+          if(temp.value == node.value){
+            if(temp == tail){
+              this.setTail(nodeToInsert);
+              break;
+            }
+            temp.next = nodeToInsert;
+            temp.next.prev = nodeToInsert;
+            nodeToInsert.prev = temp;
+            nodeToInsert.next = temp.next;
+            break;
+          }
+          else{
+            temp = temp.next;
+          }
+        }
+    }
+
+    public void insertAtPosition(int position, Node nodeToInsert) {
+      // Write your code here.
+      Node temp = head;
+      while(position > 1){
+        temp = temp.next;
+        position--;
+      }
+         if(temp == head){
+          this.setHead(nodeToInsert);
+        }
+        else if(temp == tail){
+          this.setTail(nodeToInsert);
+        }
+      else{
+         temp.prev.next = nodeToInsert;
+        temp.prev = nodeToInsert;
+        nodeToInsert.prev = temp.prev;
+         nodeToInsert.next = temp;
+      }
+     
+      
+    }
+
+    public void removeNodesWithValue(int value) {
+      // Write your code here.
+      Node temp = head;
+      while(temp != tail){
+        if(temp.value == value){
+          this.remove(temp);
+        }
+        temp = temp.next;
       }
     }
-    k++;
-    returnAr[k] = newAr;
-    int[][] finalAr = Arrays.copyOfRange(returnAr,0,k);
-    return finalAr;
+
+    public void remove(Node node) {
+      // Write your code here.
+      if(node == head){
+        node.next.prev = null;
+      }else if(node == tail){
+        node.prev.next = null;
+      }
+      else{
+        Node next = node.next;
+        Node prev = node.prev;
+         next.prev = prev;
+         prev.next = next;
+      }
+
+    }
+
+    public boolean containsNodeWithValue(int value) {
+      // Write your code here.
+      Node temp = head;
+      while(temp.next != null){
+        if(temp.value == value){
+          return true;
+        }
+        else{
+          temp = temp.next;
+        }
+      }
+      return false;
+    }
+  }
+
+  // Do not edit the class below.
+  static class Node {
+    public int value;
+    public Node prev;
+    public Node next;
+
+    public Node(int value) {
+      this.value = value;
+    }
   }
 }
