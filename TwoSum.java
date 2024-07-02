@@ -1,17 +1,15 @@
 class Solution {
     public int[] twoSum(int[] nums, int target) {
-        HashMap<Integer, Integer> hMap = new HashMap<>();
+        HashMap<Integer, Integer> trackMap = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
-            if (hMap.containsKey(nums[i])) {
-                return new int[] { i, hMap.get(nums[i]) };
-            } else {
-                hMap.put(target - nums[i], i);
-            }
+            if (trackMap.containsKey(nums[i]))
+                return new int[] { i, trackMap.get(nums[i]) };
+            else
+                trackMap.put(target - nums[i], i);
         }
-        return new int[] { 0, 0 };
+        return new int[] { 1, 1 };
     }
 }
-
 /*
  * Basic - Do a nested loop and add to compare with target
  * 
